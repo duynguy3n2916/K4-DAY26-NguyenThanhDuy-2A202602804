@@ -1,3 +1,25 @@
+# Bài nộp Lab Day 26 — Nguyễn Thanh Duy (2A202602804)
+
+| Bước | Ảnh bằng chứng | Kết quả |
+|---|---|---|
+| 1 — Function Calling | [01-function-calling.png](screenshots/01-function-calling.png) | Có cặp `[model yêu cầu]` / `[app thực thi]` và câu `Trả lời:` |
+| 2 — MCP stdio | [02-mcp-client.png](screenshots/02-mcp-client.png) | Client `list_tools` rồi `call_tool get_weather` cho 3 thành phố |
+| 3a — Auth | [03a-auth-ok.png](screenshots/03a-auth-ok.png), [03a-auth-fail.png](screenshots/03a-auth-fail.png) | Token đúng gọi được tool; token sai bị server trả `401 Unauthorized` |
+| 3b — Registry | [03b-registry.png](screenshots/03b-registry.png) | Tìm 2 tool tag `weather`, best match `get_weather_v2 v2.0.0` |
+| 3c — Versioning | [03c-versioning.png](screenshots/03c-versioning.png) | v1 deprecated + v2 trả JSON `api_version: 2.0` |
+| 4/5 — Verify | [04-verify-setup.png](screenshots/04-verify-setup.png) | `✅ All checks passed!` |
+| 5 — ADK current | [04-adk-current.png](screenshots/04-adk-current.png) | Agent gọi `get_current_weather` qua MCP, dữ liệu WeatherAPI thật |
+| 5 — ADK forecast | [04-adk-forecast.png](screenshots/04-adk-forecast.png) | Agent gọi `get_forecast`, dự báo 3 ngày |
+
+Ghi chú khi chạy:
+- Môi trường Windows (PowerShell). Bước 1 dùng `gemini-3.5-flash`. Agent ADK mặc định `gemini-3.5-flash`,
+  nhưng lúc chụp model này bị 503 (quá tải) nên chạy bằng `gemini-3.5-flash-lite` qua biến `GEMINI_MODEL` trong `.env`
+  (`gemini-2.5-flash` trả 404 cho key mới).
+- Cổng 8000 trên máy bị chiếm bởi project khác nên `adk web` chạy ở `--port 8001`.
+- Không có key nào trong repo: `.env` bị `.gitignore` bỏ qua, key trong ảnh đã được che.
+
+---
+
 # Phân biệt MCP và Function Calling
 
 Đây là hai khái niệm hay bị nhầm lẫn nhưng thực ra ở **hai tầng khác nhau**, và **bổ sung cho nhau** chứ không thay thế.

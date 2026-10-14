@@ -14,6 +14,8 @@ logger = logging.getLogger(__name__)
 # Mặc định: server chạy local. Deploy lên Cloud Run thì đặt MCP_SERVER_URL trong .env
 # (ví dụ: https://<service>.run.app/mcp). verify_setup.py đọc cùng biến này.
 MCP_SERVER_URL = os.getenv("MCP_SERVER_URL", "http://localhost:8085/mcp")
+# gemini-2.5-flash không còn mở cho key mới (404 NOT_FOUND) -> dùng gemini-3.5-flash (giống bước 1)
+MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
 
 logger.info(f"🌐 Initializing weather agent with remote MCP server")
 logger.info(f"📡 MCP Server: {MCP_SERVER_URL}")
@@ -35,7 +37,7 @@ try:
     # Create the agent with remote MCP tools
     root_agent = Agent(
         name="weather_agent",
-        model="gemini-2.5-flash",
+        model=MODEL,
         tools=[weather_tools],
     )
     logger.info("✅ Weather agent initialized with remote MCP tools:")
@@ -54,6 +56,6 @@ except Exception as e:
     logger.warning("⚠️  Creating fallback agent without MCP tools")
     root_agent = Agent(
         name="weather_agent",
-        model="gemini-2.5-flash",
+        model=MODEL,
     )
 

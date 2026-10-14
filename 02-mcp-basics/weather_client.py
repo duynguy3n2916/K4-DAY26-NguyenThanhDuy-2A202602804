@@ -16,6 +16,13 @@ Cách chạy (cùng thư mục với weather_server.py, client tự khởi độ
 import asyncio
 import sys
 
+# Đảm bảo console trên Windows không bị lỗi UnicodeEncodeError khi in tiếng Việt
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
